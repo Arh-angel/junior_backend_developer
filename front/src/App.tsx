@@ -1,10 +1,16 @@
 import React from 'react';
-import './App.css';
+import { Route, Routes } from 'react-router-dom';
+import './App.scss';
+import PageWrapper from './components/common/PageWrapper';
+import MainContainer from './containers/MainContainer';
 
 const App = () => (
-  <div className="App">
-    <h1>App</h1>
-  </div>
+  <Routes>
+    <Route path="/" element={<PageWrapper />}>
+      <Route index element={<MainContainer />} />
+      <Route path="*" element={<MainContainer />} />
+    </Route>
+  </Routes>
 );
 
 export default App;
