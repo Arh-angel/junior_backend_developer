@@ -47,6 +47,25 @@ class StandartService {
 
     return allStandarts;
   }
+
+  async getStandarts() {
+    const standartRepo = dataSourse.getRepository(Standart);
+
+    const allStandarts = await standartRepo
+    .createQueryBuilder('standart')
+    .select('standart.title')
+    .addSelect("MAX(standart.title) AS Title")
+    .addSelect("COUNT(standart.title) AS Count")
+    .groupBy('standart.title')
+    .orderBy("Count", "DESC")
+    .getRawMany();
+
+    if(!allStandarts) {
+      throw new Error('Заявок на документацию нет!');
+    }
+
+    return allStandarts;
+  }
 }
 
 export default new StandartService();

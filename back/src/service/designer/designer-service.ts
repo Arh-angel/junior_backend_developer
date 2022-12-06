@@ -2,32 +2,18 @@ import dataSourse from '../../../ormconfig';
 import Designer from '../../models/database/entity/Designer';
 
 class DesignerService {
-  async create(name) {
+  async getDesigners() {
     const designerRepo = dataSourse.getRepository(Designer);
 
-    const condidate = await designerRepo.findOne({
-      select: ['name'],
-      where: { name: name },
-    });
+    const allDesigners = await designerRepo
+    .createQueryBuilder('designer')
+    .getRawMany();
 
-    if (condidate) {
-      throw new Error(`Пользователь с именем ${name} уже существует`)
+    if(!allDesigners) {
+      throw new Error('Создайте конструкторов в базе!');
     }
 
-    const designer = await designerRepo.save({
-      name
-    });
-
-    const response = await designerRepo.findOne({
-      select: ['id', 'name'],
-      where: { id: designer.id },
-    });
-
-    if (!response) {
-      throw new Error('Не удалось создать конструктора');
-    }
-
-    return response
+    return allDesigners;
   }
 }
 

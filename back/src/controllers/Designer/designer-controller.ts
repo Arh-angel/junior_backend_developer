@@ -4,15 +4,10 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 class DesignerController {
-  async createDesigner(req, h) {
+  async getDesigners() {
     try {
-      const { name } = req;
-
-      const designerData = await designerService.create(name);
-      
-      return h.response(designerData);
+      return designerService.getDesigners();
     } catch(e) {
-      console.log(e);
        return Boom.badRequest(e)
     }
   }

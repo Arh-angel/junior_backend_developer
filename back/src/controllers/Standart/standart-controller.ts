@@ -8,20 +8,17 @@ class StandartController {
       
       return h.response(userData);
     } catch(e) {
-      console.log(e);
        return Boom.badRequest(e)
     }
   }
 
-  // async getAds() {
-  //   try {
-  //     return standartService.getAds();
-  //   } catch (error) {
-  //     console.error(`AdRepository.find(): ${error.message}`);
-
-  //     return Boom.internal(error.message);
-  //   }
-  // }
+  async getStandarts() {
+    try {
+      return standartService.getStandarts();
+    } catch (error) {
+      return Boom.internal(error.message);
+    }
+  }
 }
 
 export default new StandartController();
