@@ -1,17 +1,30 @@
-import React, { useState } from 'react';
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable react/jsx-closing-tag-location */
+import React, { useEffect, useState } from 'react';
 import style from './TablePage.module.scss';
 
-const TablePage = () => {
-  const [data, setData] = useState();
+type TablePagePropsTypes = {
+  data?: any[]
+}
+
+const TablePage = (props: TablePagePropsTypes) => {
+  const { data } = props;
+  const [currentData, setCurrentData] = useState<any[]>();
+
+  useEffect(() => {
+    if (data) {
+      setCurrentData(data);
+    }
+  }, [data]);
 
   return (
     <div className={style.container}>
       <h1 className={style.title}>Список заявок</h1>
       <ul className={style.list}>
-        {/* {data?.map((el) => <li className={style.item}>
-          <p className={style.title}>{el.title}</p>
-          <p className={style.number}>{el.count}</p>
-        </li>)} */}
+        {currentData?.map((el, item) => <li key={item} className={style.item}>
+          <p className={style.text}>{el.title}</p>
+          <p className={style.text}>{el.count}</p>
+        </li>)}
       </ul>
     </div>
   );

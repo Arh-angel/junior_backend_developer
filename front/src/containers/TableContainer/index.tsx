@@ -1,11 +1,23 @@
-import React from 'react';
+import { type } from 'os';
+import React, { useEffect, useState } from 'react';
 import TablePage from '../../components/pages/TablePage';
 
-const TableContainer = () => {
-  console.log('Table');
+type TableContainerPropsTypes = {
+  data?: any[]
+}
+
+const TableContainer = (props: TableContainerPropsTypes) => {
+  const { data } = props;
+  const [currentData, setCurrentData] = useState<any[]>();
+
+  useEffect(() => {
+    if (data) {
+      setCurrentData(data);
+    }
+  }, [data]);
 
   return (
-    <TablePage />
+    <TablePage data={currentData} />
   );
 };
 

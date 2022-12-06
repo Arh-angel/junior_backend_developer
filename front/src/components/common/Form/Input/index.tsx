@@ -6,10 +6,11 @@ import style from './Input.module.scss';
 type InputPropsType = {
   id: string;
   placeholder: string | null;
+  handlerNameStandart: (value: string) => void
 };
 
 const Input = ({
-  id, placeholder
+  id, placeholder, handlerNameStandart
 }: InputPropsType) => {
   // eslint-disable-next-line no-useless-escape
   const [currentValue, setCurrentValue] = useState('');
@@ -21,6 +22,12 @@ const Input = ({
   const handler = (event: ChangeEvent<HTMLInputElement>) => {
     setCurrentValue(event.target.value);
   };
+
+  useEffect(() => {
+    if (currentValue) {
+      handlerNameStandart(currentValue);
+    }
+  }, [currentValue]);
 
   return (
     <label className={style.wrapper} htmlFor={id}>

@@ -2,12 +2,12 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import DesignerService from '../../../services/DesignerService';
 import { RootState } from '../../store';
 
-export const getDesigner = createAsyncThunk(
-  'designer/getDesigner',
+export const getDesigners = createAsyncThunk(
+  'designer/getDesigners',
   // eslint-disable-next-line consistent-return
   async (userData: any, { rejectWithValue }) => {
     try {
-      const response = await DesignerService.getDesigner();
+      const response = await DesignerService.getDesigners();
 
       return response.data;
     } catch (e:any) {
@@ -34,13 +34,12 @@ export const designerSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
-    builder.addCase(getDesigner.fulfilled, (state, action) => {
-      state.designers = {
-        ...state.designers,
+    builder.addCase(getDesigners.fulfilled, (state, action) => {
+      state.designers = [
         ...action.payload
-      };
+      ];
     });
-    builder.addCase(getDesigner.rejected, (state, action: { payload:any }) => {
+    builder.addCase(getDesigners.rejected, (state, action: { payload:any }) => {
       state.error = action.payload.message;
     });
   },

@@ -52,19 +52,17 @@ export const standartSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(createStandart.fulfilled, (state, action) => {
-      state.standarts = {
-        ...state.standarts,
+      state.standarts = [
         ...action.payload
-      };
+      ];
     });
     builder.addCase(createStandart.rejected, (state, action: { payload:any }) => {
       state.error = action.payload.message;
     });
     builder.addCase(getStandart.fulfilled, (state, action) => {
-      state.standarts = {
-        ...state.standarts,
+      state.standarts = [
         ...action.payload
-      };
+      ];
     });
     builder.addCase(getStandart.rejected, (state, action: { payload:any }) => {
       state.error = action.payload.message;

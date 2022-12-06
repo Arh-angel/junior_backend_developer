@@ -1,17 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '../../common/Button';
 import Form from '../../common/Form';
 import Input from '../../common/Form/Input';
 import Select from '../../common/Form/Input/Select';
 
-const FormPage = () => {
-  console.log('FormPage');
+type FormPagePropsTypes = {
+  designers?: any[],
+  handlerNameStandart: (value: string) => void;
+  designerName: (num: number) => void;
+  handlerButton: () => void;
+}
+
+const FormPage = (props: FormPagePropsTypes) => {
+  const { designers, handlerNameStandart, designerName, handlerButton } = props;
+  const [currentDesigners, setCurrentDesigners] = useState<any[]>();
+
+  useEffect(() => {
+    if (designers) {
+      setCurrentDesigners(designers);
+    }
+  }, [designers]);
 
   return (
     <Form title="Форма заявки">
-      <Select title="Выберите ФИО" resetSelection={false} changeReset={() => null} adValue={0} />
-      <Input id="1" placeholder="Введите название" />
-      <Button title="Отправить" handler={() => null} />
+      <Select title="Выберите ФИО" designers={currentDesigners} handlerFullName={designerName} resetSelection={false} changeReset={() => null} />
+      <Input handlerNameStandart={handlerNameStandart} id="1" placeholder="Введите название" />
+      <Button title="Отправить" handler={handlerButton} />
     </Form>
   );
 };
