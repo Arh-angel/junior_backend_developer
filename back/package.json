@@ -1,0 +1,38 @@
+{
+  "name": "project_back",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "nodemon",
+    "migration_gen": "docker exec -it back_c npx ts-node ./node_modules/typeorm/cli migration:generate src/models/database/migrations/migrations/${name} -d ./ormconfig.ts",
+    "migration_create": "docker exec -it back_c npx ts-node ./node_modules/typeorm/cli migration:create src/models/database/migrations/migrations/${name}"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/hapi__hapi": "^20.0.12",
+    "@types/hapi__inert": "^5.2.3",
+    "@types/hapi__vision": "^5.5.3",
+    "@types/node": "^17.0.45",
+    "nodemon": "^2.0.19",
+    "prettier": "^2.7.1",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "@hapi/boom": "^10.0.0",
+    "@hapi/hapi": "^20.2.2",
+    "@hapi/hoek": "^10.0.1",
+    "@hapi/inert": "^6.0.5",
+    "@hapi/vision": "^6.1.0",
+    "dotenv": "^16.0.1",
+    "hapi-swagger": "^14.5.5",
+    "joi": "^17.6.0",
+    "nodemailer": "^6.7.5",
+    "pg": "^8.7.3",
+    "typeorm": "^0.3.7"
+  }
+}
