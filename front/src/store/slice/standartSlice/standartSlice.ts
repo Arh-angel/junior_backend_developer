@@ -1,6 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { AxiosError } from 'axios';
 import StandartService from '../../../services/StandartService';
 import { RootState } from '../../store';
+
+interface ValidationErrors {
+  errorMessage: string
+  field_errors: Record<string, string>
+}
 
 export const createStandart = createAsyncThunk(
   'standart/createStandart',
@@ -12,8 +18,13 @@ export const createStandart = createAsyncThunk(
       const response = await StandartService.createStandart(designer, title);
 
       return response.data;
-    } catch (e:any) {
-      rejectWithValue(e.response.data);
+    } catch (err:any) {
+      const error: AxiosError<ValidationErrors> = err;
+      if (!error.response) {
+        throw err;
+      }
+
+      return rejectWithValue(error.response.data);
     }
   }
 );
@@ -26,8 +37,13 @@ export const getStandart = createAsyncThunk(
       const response = await StandartService.getStandart();
 
       return response.data;
-    } catch (e:any) {
-      rejectWithValue(e.response.data);
+    } catch (err:any) {
+      const error: AxiosError<ValidationErrors> = err;
+      if (!error.response) {
+        throw err;
+      }
+
+      return rejectWithValue(error.response.data);
     }
   }
 );
@@ -48,6 +64,9 @@ export const standartSlice = createSlice({
   reducers: {
     clearStandarts: (state) => {
       state.standarts = [];
+    },
+    clearError: (state) => {
+      state.error = '';
     }
   },
   extraReducers: (builder) => {
@@ -70,8 +89,9 @@ export const standartSlice = createSlice({
   },
 });
 
-export const { clearStandarts } = standartSlice.actions;
+export const { clearStandarts, clearError } = standartSlice.actions;
 
 export const selectStandarts = (state: RootState) => state.standart.standarts;
+export const selectError = (state: RootState) => state.standart.error;
 
 export default standartSlice.reducer;

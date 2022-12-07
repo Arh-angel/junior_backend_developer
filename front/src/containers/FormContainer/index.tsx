@@ -1,8 +1,8 @@
 /* eslint-disable max-len */
 import React, { useEffect, useState } from 'react';
 import FormPage from '../../components/pages/FormPage';
-import { useAppDispatch } from '../../hooks/storeHooks';
-import { createStandart } from '../../store/slice/standartSlice/standartSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
+import { clearError, createStandart, selectError } from '../../store/slice/standartSlice/standartSlice';
 
 type FormContainerPropsTypes = {
   designers?: any[]
@@ -13,6 +13,9 @@ const FormContainer = (props: FormContainerPropsTypes) => {
   const [currentDesigners, setCurrentDesigners] = useState<any[]>();
   const [designer, setDesigner] = useState<number>();
   const [title, setTitle] = useState<string>('');
+  const [send, setSend] = useState<boolean>(false);
+
+  const currentError = useAppSelector(selectError);
 
   const dispatch = useAppDispatch();
 
@@ -31,16 +34,18 @@ const FormContainer = (props: FormContainerPropsTypes) => {
   };
 
   const handlerButton = () => {
-    console.log(designer);
-    console.log(title);
+    dispatch(clearError());
 
     if (designer) {
       dispatch(createStandart({ designer, title }));
+      setSend(true);
     }
+
+    setTimeout(() => setSend(false), 1000);
   };
 
   return (
-    <FormPage designers={currentDesigners} designerName={handlerFullName} handlerNameStandart={handlerNameStandart} handlerButton={handlerButton} />
+    <FormPage send={send} designers={currentDesigners} designerName={handlerFullName} handlerNameStandart={handlerNameStandart} handlerButton={handlerButton} textError={currentError} />
   );
 };
 

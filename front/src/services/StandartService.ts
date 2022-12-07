@@ -3,7 +3,6 @@ import apiAxios from '../network';
 
 export default class StandartService {
   static async createStandart(designer: string, title: string): Promise<AxiosResponse<any>> {
-    console.log(designer, title);
     return apiAxios.post<any>('/createStandart', { designer, title });
   }
 

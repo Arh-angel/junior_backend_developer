@@ -19,7 +19,11 @@ const TablePage = (props: TablePagePropsTypes) => {
 
   return (
     <div className={style.container}>
-      <h1 className={style.title}>Список заявок</h1>
+      <h1 className={style.title}>Сводная таблица</h1>
+      <div className={style.tableHeader}>
+        <p className={style.nameColumn}>Наименование документа</p>
+        <p className={style.nameColumn}>Количество заявок</p>
+      </div>
       <ul className={style.list}>
         {currentData?.map((el, item) => <li key={item} className={style.item}>
           <p className={style.text}>{el.title}</p>

@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-indent */
 import React, { useEffect, useState } from 'react';
-import { useAppDispatch } from '../../../../../hooks/storeHooks';
 import Button from '../../../Button';
 
 import style from './Select.module.scss';
@@ -9,24 +8,28 @@ type SelectPropsType = {
   title: string;
   designers?: any[];
   handlerFullName: (num: number) => void;
-  resetSelection: boolean;
   changeReset: () => void;
+  send: boolean
 }
 
 const Select = (props: SelectPropsType) => {
-  const { title, designers, handlerFullName, resetSelection, changeReset } = props;
+  const { title, designers, handlerFullName, changeReset, send } = props;
 
-  const [stringCurrentValue, setStringCurrentValue] = useState<string>('ФИО');
+  const [stringCurrentValue, setStringCurrentValue] = useState<string>('ФИО конструктора');
   const [openSelect, setOpenSelect] = useState(false);
   const [currentDesigners, setCurrentDesigners] = useState<any[]>();
-
-  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (designers) {
       setCurrentDesigners(designers);
     }
   }, [designers]);
+
+  useEffect(() => {
+    if (send) {
+      setStringCurrentValue('ФИО конструктора');
+    }
+  }, [send]);
 
   const handlerCurrentValue = (value: string, num: number) => {
     changeReset();

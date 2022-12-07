@@ -43,8 +43,6 @@ class StandartService {
     .orderBy("Count", "DESC")
     .getRawMany();
 
-    console.log(allStandarts);
-
     return allStandarts;
   }
 

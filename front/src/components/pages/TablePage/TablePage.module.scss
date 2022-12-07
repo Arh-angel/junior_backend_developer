@@ -8,6 +8,24 @@
     text-align: center;
   }
 
+  & > .tableHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid black;
+
+    & > .nameColumn {
+      width: 50%;
+      text-align: center;
+      border-right: 2px solid blue;
+      font-size: 24px;
+      font-weight: 600;
+      &:last-child {
+        border-right: none;
+      }
+    }
+  }
+
   & > .list {
     padding: 20px;
     margin: 0;
